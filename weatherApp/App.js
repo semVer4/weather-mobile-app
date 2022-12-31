@@ -1,23 +1,24 @@
-import axios from 'axios';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Loading from './components/Loading';
+import * as Location from 'expo-location';
+import { useEffect } from 'react';
+import { Alert } from 'react-native';
 
 export default function App() {
-  const url = "https://jsonplaceholder.typicode.com/posts";
-  const response = axios.get(url);
+  async function getLocation() {
+    try {
+      const response = await Location.getPermissionsAsync();
+      console.log(response)
+      const location = await Location.getCurrentPositionAsync();
+    } catch (error) {
+      Alert.alert('Не могу определить местоположение', "Неприкольно");
+    }
+  }
 
+  useEffect(() => {
+    getLocation();
+  }, []);
+  
   return (
-    <View style={styles.container}>
-      <Text></Text>
-    </View>
+    <Loading />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'silver',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
