@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const Loading = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Получение погоды...</Text>
+            <Text style={styles.text}>Loading weather...</Text>
         </View>
     );
 }
@@ -12,15 +12,14 @@ const Loading = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-end',
-        paddingHorizontal: '30',
-        paddingVertical: '30',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#FEF3A2'
     },
     text: {
         color: 'black',
-        fontSize: '25',
+        fontSize: 30
     }
-})
+});
 
 export default Loading;
