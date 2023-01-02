@@ -1,10 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, ImageBackground } from 'react-native';
+
+const path = { uri: '../assets/amg.jpg' }; 
 
 const Loading = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Loading weather...</Text>
+            <StatusBar barStyle="light-content" />
+            <ImageBackground source={require('../assets/amg.jpg')} style={styles.image}>
+                <Text style={styles.text}>LOADING...</Text>
+            </ImageBackground>
         </View>
     );
 }
@@ -12,13 +17,19 @@ const Loading = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FEF3A2'
+        flexDirection: 'column',
+    },
+    image: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center'
     },
     text: {
-        color: 'black',
-        fontSize: 30
+        color: 'white',
+        fontSize: 42,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        backgroundColor: '#000000a0',
     }
 });
 

@@ -9,11 +9,19 @@ const API_KEY = 'e8732b6d8241e648d8dac401c7860d7c';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState();
+  const [temp, setTemp] = useState();
+  const [city, setCity] = useState();
+  const [weather, setWeather] = useState();
+  const [desc, setDesc] = useState();
 
   const getWeather = async (latitude, longitude) => {
-    const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`);
-    setData(data);
+    const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=ru`);
+    setTemp(data.main.temp);
+    setCity(data.name);
+    setWeather(data.weather[0].main);
+    setDesc(data.weather[0].description);
+
+    setIsLoading(false);
   }
 
   const getLocation = async () => {
@@ -21,7 +29,6 @@ export default function App() {
       await Location.requestPermissionsAsync();
       const {coords: {latitude, longitude}} = await Location.getCurrentPositionAsync();
       getWeather(latitude, longitude);
-      setIsLoading(false);
     } catch (error) {
       Alert.alert('Error', 'error location')
     }
@@ -29,9 +36,9 @@ export default function App() {
 
   useEffect(() => {
     getLocation();
-  }, [])
+  }, []);
 
   return (
-    isLoading ? <Loading /> : <Weather />
+    isLoading ? <Loading /> : <Weather temp={temp} city={city} weather={weather} desc={desc} />
   );
 }
